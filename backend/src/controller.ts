@@ -24,7 +24,7 @@ const client = new MongoClient(uri);
         const cursor: AggregationCursor<Document> = 
         trends.aggregate([ 
             {$match:{ country: countryArg, created_at: {$gte: start,$lte: end}}},
-            {$group:{_id:{$hour:'$created_at'},name:{$push:'$name'},index:{$push:'$trend_index'}}},
+            {$group:{_id:{$hour:'$created_at'},names:{$push:'$name'},indices:{$push:'$trend_index'},volumes:{$push:'$tweet_volume'}}},
             {$sort:{_id:1}}
         ]);
           

@@ -9,12 +9,9 @@ const app = (0, express_1.default)();
 const port = process.env.TRENDS_PROJECT_port || 8080;
 app.get("/search", (req, res, next) => {
     let { trend_Country } = req.query;
-    console.log(`country:${trend_Country}`);
     let { trend_Date } = req.query;
-    console.log(`date:${trend_Date}`);
-    let dateParm = new Date(trend_Date);
     //validating the data:
-    if (trend_Country === "" || trend_Date === "") {
+    if (!req.query.trend_Country || !req.query.trend_Date) {
         res.status(400).send("required data(country ,date)!");
     }
     //using getter method here to get all the spicified data:

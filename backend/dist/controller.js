@@ -11,27 +11,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTrends = void 0;
 const mongodb_1 = require("mongodb");
+//declaring unified resource indentifier for DB and client:
 const uri = process.env.MONGO_DB_TRENDS_PROJECT;
 const client = new mongodb_1.MongoClient(uri);
+//method to get trends matches the filtering parameters:
 function getTrends(countryArg, dateArg) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let dateParm = new Date(dateArg);
             const database = client.db('finder_twitter');
             const trends = database.collection('country_trends');
-            // Query for a movie that has the title 'Back to the Future'
-
-            var first = new ISODate("2020-01-04");
-            trends.find({country: countryArg, StartDate: {$gte: first}});
-
-
-            const cursor = trends.find({country: countryArg, StartDate: {$gte: first}});
+            //initializing the dates(start date,end date):
+            let start = new Date(dateArg);
+            start.setHours(0, 0, 0, 0);
+            let end = new Date(dateArg);
+            end.setHours(23, 59, 59, 999);
+            //filtering ,grouping and sorting data:
+            const cursor = trends.aggregate([
+                { $match: { country: countryArg, created_at: { $gte: start, $lte: end } } },
+                { $group: { _id: { $hour: '$created_at' }, names: { $push: '$name' }, indices: { $push: '$trend_index' }, volumes: { $push: '$tweet_volume' } } },
+                { $sort: { _id: 1 } }
+            ]);
             const results = yield cursor.toArray();
+            //return an array of documents as the result:
             return results;
         }
-        finally {
-            // Ensures that the client will close when you finish/error
-            yield client.close();
+        catch (err) {
+            //catching errors and logging them:
+            console.log(err);
         }
     });
 }
