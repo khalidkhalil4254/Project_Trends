@@ -10,7 +10,7 @@ app.get("/search",(req:Request , res:Response , next:NextFunction)=>{
     let {trend_Date}=req.query;
     
     //validating the data:
-    if(trend_Country==="" || trend_Date===""){
+    if(!req.query.trend_Country || !req.query.trend_Date){
         res.status(400).send("required data(country ,date)!");
     }
 
