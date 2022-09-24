@@ -1,29 +1,48 @@
 // Importing dependencies
-import { Schema , model , Types } from 'mongoose';
-import mongoose from 'mongoose';
-import trend_interface from './trendModel'
+import mongodb from 'mongodb';
+import { MongoClient, Db ,Document ,WithId, FindCursor, AggregationCursor , Collection} from 'mongodb';
 
-// Connecting the database using env variables
-mongoose.connect(process.env.MONGO_DB_TRENDS_PROJECT as unknown as string);
+const uri:string = process.env.MONGO_DB_TRENDS_PROJECT as unknown as string;
+const client = new MongoClient(uri);
 
-//@TODO => declaring the database schema and model:
-// 2. Create a Schema corresponding to the document interface.
-const userSchema = new Schema<trend_interface>({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    avatar: String
-  });
-  
-  // 3. Create a Model.
-  const User = model<trend_interface>('User', userSchema);
 
-//function to get the trends based on country and date specified:
-export const getTrends=(country: string,date: string)=>{
-    let listOfTrends:string[]=[];
-    //@TODO => to be implemented------------
-    return listOfTrends;
+
+ async function getTrends(countryArg: string,dateArg: string):Promise<Document[]>{
+    try {
+        const database: Db = client.db('finder_twitter');
+        const trends: Collection<Document> = database.collection('country_trends');
+        // Query for a movie that has the title 'Back to the Future'
+        let start:Date = new Date(dateArg);
+        start.setHours(0,0,0,0);
+        let end:Date = new Date(dateArg);
+        end.setHours(23,59,59,999);
+        console.log("start date:"+start);
+        console.log("end date:"+end);
+     
+
+        // db.employees.aggregate([ 
+        //     { $match:{ gender:'male'}}, 
+        //     { $group:{ _id:'$department.name', totalEmployees: { $sum:1 } } 
+        // }])
+
+
+        const cursor: AggregationCursor<Document> = 
+        trends.aggregate([ 
+            {$match:{ country: countryArg, created_at: {$gte: start,$lte: end}}},
+            {$group:{_id:'$_id' , totalTrends: {$sum:'1'}}}
+        ]);
+          
+        const results: Document[]= await cursor.toArray();
+        return results;
+      } finally {
+        // Ensures that the client will close when you finish/error
+      
+      }
 }
 
 
+export {getTrends}
 
+
+ 
 
