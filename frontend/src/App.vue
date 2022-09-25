@@ -1,27 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <titlebar/>
+
+    <div class="main_container">
+      <searchArea id="searchArea"/>
+    </div>
+   
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import titlebar from './components/titlebar.vue'
+import searchArea from './components/search_area.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
-  }
+    titlebar,searchArea,
+}
 });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  *{
+    margin: 0;
+  }
+
+#searchArea{
+  position: relative;
+  margin-top: 12vh;
+  margin-left: 23vw;
 }
+
 </style>

@@ -1,9 +1,9 @@
 //importing dependencies:
 import {Application ,Request ,Response ,NextFunction} from "express";
-import express from "express";
+import {getTrends} from "./controller";
 import bodyParser from 'body-parser';
+import express from "express";
 import cors from 'cors';
-import {getTrends} from "./controller"
 
 //declaring the app and port number:
 const app: Application = express();
@@ -53,5 +53,6 @@ app.get("/",(req:Request , res:Response , next:NextFunction)=>{
 
 //application listens on port 8080:
 app.listen(port,()=>{
-    console.log(`server running on: http://localhost:${port}`)
+    console.log( `server running http:/localhost:${port}` );
+    console.log( `press CTRL+C to stop server` );
 })
