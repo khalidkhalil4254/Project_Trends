@@ -1,14 +1,25 @@
 <template>
     <section class="titlebar_container">
-        Twitter Trends
+        {{pageTitle}}
     </section>
 </template>
 
 <script lang="ts">
+    import { useStore ,mapState ,mapActions ,mapGetters ,mapMutations} from "vuex";
     import { defineComponent } from 'vue';
     export default defineComponent({
         name: 'title_bar',
-        components: {}
+        components: {},
+        computed:{
+            ...mapState([
+                'pageTitle',
+            ]),
+        },
+        data(){
+            return{
+                
+            }
+        }
 });
 
 </script>

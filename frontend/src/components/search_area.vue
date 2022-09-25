@@ -1,23 +1,54 @@
 <template>
     <div class="main_container">
-        <select name="country" id="countries">
-            <option class="select_option" value="Egypt">Egypt</option>
-            <option class="select_option" value="UAE">UAE</option>
-            <option class="select_option" value="Kawait">Kawait</option>
-            <option class="select_option" value="Qatar">Qatar</option>
-            <option class="select_option" value="Saudi Arabia">Saudi Arabia</option>
+        <select v-model="trendCountry" @click="updateCountry(trendCountry)" id="countries">
+            <optgroup>
+                <option value="Egypt" class="select_option">Egypt</option>
+                <option value="UAE" class="select_option">UAE</option>
+                <option value="Kawait" class="select_option">Kawait</option>
+                <option value="Qatar" class="select_option">Qatar</option>
+                <option value="Saudi Arabia" class="select_option">Saudi Arabia</option>
+            </optgroup>
           </select>
-            <input id="date_input" type="date" placeholder="Date">
-            <button id="search_button">SEARCH</button> 
+            <input v-model="trendDate" @input="updateDate(trendDate)" id="date_input" type="date" placeholder="Date">
+            <button @click="getTrends" id="search_button">SEARCH</button> 
+            {{date}}-{{country}}=>{{allTrends}}
     </div>
      
 </template>
 
 <script lang="ts">
+import { useStore ,mapState ,mapActions ,mapGetters ,mapMutations} from "vuex";
 import  { defineComponent } from 'vue'
 export default defineComponent({
     name:'search_area',
-    components: {}
+    components: {},
+    computed:{
+            ...mapState([
+                'pageTitle','allTrends','country','date'
+            ]),
+            
+        },
+    data(){
+        return{
+            trendCountry:"",
+            trendDate:"",
+            options:[
+                {value:"Egypt"},
+                {value:"UAE"},
+                {value:"Kawait"},
+                {value:"Qatar"},
+                {value:"Saudi Arabia"},
+            ]
+        }
+    },
+    methods:{
+        ...mapMutations([
+                'updateTrends','setCountry','updateCountry','updateDate'
+            ]),
+            ...mapActions([
+                'getTrends'
+            ])
+    },
 })
 </script>
 

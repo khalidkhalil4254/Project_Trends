@@ -7,7 +7,7 @@ import cors from 'cors';
 
 //declaring the app and port number:
 const app: Application = express();
-const port: number = process.env.TRENDS_PROJECT_port as unknown as number || 8080;
+const port: number = process.env.TRENDS_PROJECT_port as unknown as number || 8100;
 
 
 //using request bodyparser:
@@ -29,6 +29,9 @@ app.get("/search",(req:Request , res:Response , next:NextFunction)=>{
     let {trend_Country}=req.query;
     let {trend_Date}=req.query;
     
+    console.log("country:"+trend_Country);
+    console.log("date:"+trend_Date);
+
     //validating the data:
     if(!req.query.trend_Country || !req.query.trend_Date){
         res.status(400).send("required (country , date) data!");
