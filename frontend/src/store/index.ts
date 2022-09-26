@@ -22,7 +22,7 @@ export default createStore({
     },
 
     getEachTrends(state){
-      const res:any[]=[];
+      const res:trend_Interface[]=[];
       state.allTrends.forEach((element:any) => {
           const Names=element.names;
           const Indices=element.indices;

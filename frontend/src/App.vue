@@ -31,6 +31,9 @@ computed:{
   *{
     margin: 0;
   }
+  body{
+    background: rgba(220, 220, 220, 0.089);
+  }
 .main_container{
   width: 100%;
 }
