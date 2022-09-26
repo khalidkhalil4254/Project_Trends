@@ -1,5 +1,5 @@
 <template>
-    <div class="main_container">
+    <div class="search_container">
         <select v-model="trendCountry" @click="updateCountry(trendCountry)" id="countries">
             <optgroup>
                 <option value="Egypt" class="select_option">Egypt</option>
@@ -11,13 +11,12 @@
           </select>
             <input v-model="trendDate" @input="updateDate(trendDate)" id="date_input" type="date" placeholder="Date">
             <button @click="getTrends" id="search_button">SEARCH</button> 
-            {{date}}-{{country}}=>{{allTrends}}
-    </div>
-     
+        </div>       
+
 </template>
 
 <script lang="ts">
-import { useStore ,mapState ,mapActions ,mapGetters ,mapMutations} from "vuex";
+import { mapState ,mapActions ,mapGetters ,mapMutations } from "vuex";
 import  { defineComponent } from 'vue'
 export default defineComponent({
     name:'search_area',
@@ -26,7 +25,7 @@ export default defineComponent({
             ...mapState([
                 'pageTitle','allTrends','country','date'
             ]),
-            
+
         },
     data(){
         return{
@@ -42,19 +41,23 @@ export default defineComponent({
         }
     },
     methods:{
-        ...mapMutations([
-                'updateTrends','setCountry','updateCountry','updateDate'
+            ...mapMutations([
+                'updateTrends','updateCountry','updateDate','setEachTrendArray'
             ]),
             ...mapActions([
                 'getTrends'
+            ]),
+            ...mapGetters([
+                'getEachTrends','getEachTrend'
             ])
+        
     },
 })
 </script>
 
 <style scoped>
 
-.main_container{
+.search_container{
     width: auto;
     display: flex;
     flex-direction: column;

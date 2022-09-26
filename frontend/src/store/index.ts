@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
+import trend_Interface from './trendInterface';
 import axios from 'axios';
+
+
 
 export default createStore({
   state: {
@@ -10,28 +13,56 @@ export default createStore({
     allTrends:[],
   },
   getters: {
-   
+    getTrendsIDs(context){
+      const IDs:number[]=[];
+      context.allTrends.forEach((el:any)=>{
+        IDs.push(el._id);
+      });
+      return IDs;
+    },
 
+    getEachTrends(state){
+      const res:any[]=[];
+      state.allTrends.forEach((element:any) => {
+          const Names=element.names;
+          const Indices=element.indices;
+          const Volumes=element.volumes;
+      
+          const len=Names.length;
+      
+          for(let x=0;x<len;x++){
+              res.push({
+                  index:Indices[x],
+                  name:Names[x],
+                  volume:Volumes[x]
+              });
+          }
+  
+      });    
+  
+      return res;
+    },
+    
   },
   mutations: {
+    //adding methods that changes states in app here:
     updateCountry(state,value){
       state.country=value;
     },
     updateDate(state,value){
       state.date=value;
     },
-    //adding methods that changes states in app here:
     updateTrends(state,value){
-      //extracting country and date values from state as globally:
       state.allTrends=value;
     },
   },
   actions: {
-    //adding shared methods of app here:
+    //adding shared async methods of app here:
     async getTrends(context){
       const data=axios.get(`http://localhost:8100/search?trend_Country=${context.state.country}&trend_Date=${context.state.date}`);
       console.log((await data).data.data);
-      context.commit('updateTrends',(await data));
+      context.commit('updateTrends',(await data).data);
+      context.commit('setEachTrendArray');
     },
 
 
