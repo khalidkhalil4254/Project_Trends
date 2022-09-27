@@ -1,11 +1,11 @@
 <template>
-       <div v-if="country!='null' && date!='null'" class="table_container">
+       <div v-if="country!=null && date!=null" class="table_container">
 
                 <!--this is the starting of the table-->
-                <table class="table" v-for="hour in allTrends" :key="hour">
+                <table class="table" v-for="trend in allTrends" :key="trend._id">
                     <tr class="hour_container">
                         <th class="hour"></th>
-                        <th class="hour">{{hour._id}}:00</th>
+                        <th class="hour">{{trend._id}}:00</th>
                         <th class="hour"></th>
                     </tr>
                     <tr class="header_row">
@@ -14,17 +14,10 @@
                       <td>volume    |   </td>
                     </tr>
 
-                    <tr class="table_row" v-for="trend in getEachTrends.splice(0,50)" :key="trend.index">
-                      <td class="record" v-if="trend!==''||trend!==null">{{trend.index || "Null"}}</td>
-                      <td class="record" v-if="trend!==''||trend!==null">{{trend.name || "Null"}}</td>
-                      <td class="record" v-if="trend!==''||trend!==null">{{trend.volume || "Null"}}</td>
-                    </tr>
+                    <trendRow :trendsInHour="trend.trendsPerHour"/>
 
                   </table>
                 <!--this is the ending of the table-->
-
-
-
 
 
             </div>
@@ -33,10 +26,11 @@
 
 <script lang="ts">
 import { mapState ,mapActions ,mapGetters ,mapMutations } from "vuex";
+import trendRow from './trend_row.vue';
 import { defineComponent } from 'vue'
 export default defineComponent({
     name:'trendPerHour',
-    components:{},
+    components:{trendRow},
     data(){
         return{
             startEl:0,
@@ -49,7 +43,7 @@ export default defineComponent({
                 'pageTitle','allTrends','country','date'
             ]),
             ...mapGetters([
-                'getEachTrends'
+          
             ])
         }, 
     mehods:{
@@ -70,6 +64,7 @@ export default defineComponent({
         flex-direction: column;
         align-items: center;
         justify-items: center;
+        margin-bottom: 20vh;
     }
 
     .table_container .table{

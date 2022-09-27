@@ -9,7 +9,7 @@
                 <option value="Saudi Arabia" class="select_option">Saudi Arabia</option>
             </optgroup>
           </select>
-            <input v-model="trendDate" @input="updateDate(trendDate)" id="date_input" type="date" placeholder="Date">
+            <input v-model="trendDate" @input="updateDate(trendDate)" id="date_input" type="date"  min="2020-01-01" max="2022-12-31" placeholder="Date">
             <button @click="getTrends" id="search_button">SEARCH</button> 
         </div>       
 
@@ -29,6 +29,7 @@ export default defineComponent({
         },
     data(){
         return{
+            maxDate:new Date(),
             trendCountry:"",
             trendDate:"",
             options:[

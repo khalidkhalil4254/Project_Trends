@@ -22,10 +22,34 @@ const client = new MongoClient(uri);
 
         //filtering ,grouping and sorting data:
         const cursor: AggregationCursor<Document> = 
-        trends.aggregate([ 
-            {$match:{ country: countryArg, created_at: {$gte: start,$lte: end}}},
-            {$group:{_id:{$hour:'$created_at'},names:{$push:'$name'},indices:{$push:'$trend_index'},volumes:{$push:'$tweet_volume'}}},
-            {$sort:{_id:1}}
+        trends.aggregate([
+          {
+            '$match': {
+              'country': countryArg, 
+              'created_at': {
+                '$gte': start, 
+                '$lte': end
+              }
+            }
+          }, {
+            '$sort': {
+              'created_at': 1, 
+              'trend_index': 1
+            }
+          }, {
+            '$group': {
+              '_id': {
+                '$hour': '$created_at'
+              }, 
+              'trendsPerHour': {
+                '$push': '$$ROOT'
+              }
+            }
+          }, {
+            '$sort': {
+              '_id': 1
+            }
+          }
         ]);
           
         const results: Document[]= await cursor.toArray();

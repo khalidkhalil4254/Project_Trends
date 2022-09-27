@@ -1,5 +1,4 @@
 import { createStore } from 'vuex'
-import trend_Interface from './trendInterface';
 import axios from 'axios';
 
 
@@ -8,40 +7,12 @@ export default createStore({
   state: {
     //adding shared states or data of app here: 
     pageTitle:"Twitter Trends",
-    country:"null",
-    date:"null",  
+    country: null,
+    date: null,  
     allTrends:[],
   },
   getters: {
-    getTrendsIDs(context){
-      const IDs:number[]=[];
-      context.allTrends.forEach((el:any)=>{
-        IDs.push(el._id);
-      });
-      return IDs;
-    },
-
-    getEachTrends(state){
-      const res:trend_Interface[]=[];
-      state.allTrends.forEach((element:any) => {
-          const Names=element.names;
-          const Indices=element.indices;
-          const Volumes=element.volumes;
-      
-          const len=Names.length;
-      
-          for(let x=0;x<len;x++){
-              res.push({
-                  index:Indices[x],
-                  name:Names[x],
-                  volume:Volumes[x]
-              });
-          }
-  
-      });    
-  
-      return res;
-    },
+ 
     
   },
   mutations: {
