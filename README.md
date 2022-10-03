@@ -5,7 +5,7 @@ Project_Tresnds is web application is used to view/visualize most Twitter Trends
 
 The project is split into two parts:
 1. Frontend - VueJs Web-Application.
-2. Backend RESTful API - Node-Express application
+2. Backend RESTful API - Typescript - > Node-Express application
 
 ## Getting Started
 > _tip_: it's recommended that you start with getting the backend API running since the frontend web application depends on the API.
