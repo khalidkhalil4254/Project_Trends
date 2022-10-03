@@ -27,9 +27,9 @@ Once your database is set up environment variables in your machine/environment.
 ### 3. Backend API
 Launch the backend API locally. The API is the application's interface to the database.
 
-* To download all the package dependencies, run the command from the directory `udagram-api/`:
+* To download all the package dependencies, run the command from the project root directory:
     ```bash
-    npm install .
+    npm i
     ```
 * To run the application locally, run:
     ```bash
