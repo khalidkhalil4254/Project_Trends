@@ -40,7 +40,7 @@ Launch the backend API locally. The API is the application's interface to the da
 ### 4. Frontend App
 Launch the frontend app locally.
 
-* To download all the package dependencies, run the command from the directory `udagram-frontend/`:
+* To download all the package dependencies, run the command from the project root directory:
     ```bash
     npm install .
     ```
