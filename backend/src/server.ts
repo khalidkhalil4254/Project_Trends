@@ -19,7 +19,7 @@ app.use(bodyParser.json());
     ],
     methods: 'GET,HEAD,OPTIONS,POST',
     preflightContinue: true,
-    origin: '*',  //change to origin host
+    origin: '*',  //change to client hostname
   }));
 
 
